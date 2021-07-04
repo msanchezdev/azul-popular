@@ -1,0 +1,12 @@
+{
+  "name": "azul-popular",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Manuel Sanchez",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^15.12.4",
+    "axios": "^0.21.1",
+    "ws-azul-cert": "^1.0.11"
+  }
+}
