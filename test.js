@@ -1,32 +1,32 @@
-import Azul from '.';
-import { ProcessPaymentArgs } from './types';
+require('dotenv').config();
+const { default: Azul } = require('./dist');
 
 (async () => {
   try {
     const client = new Azul({
-      auth1: 'testcert2',
-      auth2: 'testcert2',
-      cert: 'cert/certificate.crt',
-      key: 'cert/private.key',
+      auth1: process.env.AZUL_AUTH1,
+      auth2: process.env.AZUL_AUTH2,
+      cert: process.env.AZUL_CERT,
+      key: process.env.AZUL_KEY,
       store: {
-        merchantId: '12121212121',
-        channel: 'EC',
-        posInputMode: 'E-Commerce',
-        currencyPosCode: '$',
+        merchantId: process.env.AZUL_MERCHANT_ID,
+        channel: process.env.AZUL_CHANNEL,
+        posInputMode: process.env.AZUL_INPUT_MODE,
+        currencyPosCode: process.env.AZUL_CURRENCY_CODE,
       },
 
       test: true,
       debug: true,
     });
 
-    const override: ProcessPaymentArgs = {
+    const override = {
       CustomOrderId: 'ORDER-1',
     };
 
     const Card = {
-      CardNumber: '1111222233334444',
-      CVC: 888,
-      Expiration: new Date('2021-12'),
+      CardNumber: process.env.AZUL_CARD_NUMBER,
+      CVC: process.env.AZUL_CVC,
+      Expiration: new Date(process.env.AZUL_EXPIRATION),
     };
 
     console.log('====================== Create Token =======================');
@@ -86,7 +86,6 @@ import { ProcessPaymentArgs } from './types';
     if (order1.CustomOrderId) {
       console.log(await client.verify(order1.CustomOrderId));
     }
-
     console.log('==================== Delete Token ========================');
     await client.deleteToken(Token);
   } catch (err) {
